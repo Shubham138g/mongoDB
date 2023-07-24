@@ -4,6 +4,7 @@ const dbUrl = "mongodb+srv://tonygupta275:zoAcRqDwTeldGSC2@cluster0.6efrmtj.mong
 mongoose.connect(dbUrl, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
+    // useCreateIndex:true
 })
     .then(() => {
         console.log("connection succesfull");
@@ -36,7 +37,12 @@ const studentschema = new mongoose.Schema({
         type: Number,
         required:true,
         maxlength:7,
-        minlength:2
+        minlength:2,
+        validate(value){ //custom validation
+            if(value<0){
+                throw new Error("rollno should be positive");
+            }
+        }
     },
     date: {
         type: Date,
@@ -52,10 +58,10 @@ const Teacher = new mongoose.model("Teacher", studentschema);
 
 const createDocument = async () => {
     try {
-        const stuDent7 = new Teacher({
-            name: "SHUBHAM kumar     ",
+        const stuDent8 = new Teacher({
+            name: "akash      ",
             class: "bsc",
-            rollno: 206048
+            rollno: 206051
         })
         // const stuDent2 = new Teacher({
         //     name: "Kundan",
@@ -73,7 +79,7 @@ const createDocument = async () => {
         //     rollno: 206054
         // })
 
-        const result = await Teacher.insertMany([stuDent7]);
+        const result = await Teacher.insertMany([stuDent8]);
         console.log(result)
     } catch (err) {
         console.log(err)
