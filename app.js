@@ -1,4 +1,5 @@
 const mongoose = require("mongoose")
+const validator = require("validator")
 const dbUrl = "mongodb+srv://tonygupta275:zoAcRqDwTeldGSC2@cluster0.6efrmtj.mongodb.net/college?retryWrites=true&w=majority";
 
 mongoose.connect(dbUrl, {
@@ -44,6 +45,17 @@ const studentschema = new mongoose.Schema({
             }
         }
     },
+    email:{
+        type:String,
+        required:true,
+        unique:true,
+        lowercase:true,
+        validate(value){
+            if(!validator.isEmail(value)){
+                throw new Error("Email is not valid eg:- abc@gmail.com")
+            }
+        }
+    },
     date: {
         type: Date,
         default: Date.now
@@ -58,10 +70,11 @@ const Teacher = new mongoose.model("Teacher", studentschema);
 
 const createDocument = async () => {
     try {
-        const stuDent8 = new Teacher({
-            name: "akash      ",
+        const stuDent9 = new Teacher({
+            name: "abc      ",
             class: "bsc",
-            rollno: 206051
+            rollno: 206059,
+            email: "abc@gmail.com"
         })
         // const stuDent2 = new Teacher({
         //     name: "Kundan",
@@ -79,7 +92,7 @@ const createDocument = async () => {
         //     rollno: 206054
         // })
 
-        const result = await Teacher.insertMany([stuDent8]);
+        const result = await Teacher.insertMany([stuDent9]);
         console.log(result)
     } catch (err) {
         console.log(err)
