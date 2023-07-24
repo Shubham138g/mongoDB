@@ -13,9 +13,31 @@ mongoose.connect(dbUrl, {
 //userschema structure
 
 const studentschema = new mongoose.Schema({
-    name: String,
-    class: String,
-    rollno: Number,
+    name: {
+        type: String,
+        required: true,
+        unique: true,
+        lowercase: true,
+        trim: true,
+        minlength: 3,
+        maxlength: 40
+    },
+    class: {
+        type: String,
+        required: true,
+        enum: ["bca", "btech", "bsc"],
+        lowercase: true,
+        trim: true,
+        minlength: 3,
+        maxlength: 40
+
+    },
+    rollno: {
+        type: Number,
+        required:true,
+        maxlength:7,
+        minlength:2
+    },
     date: {
         type: Date,
         default: Date.now
@@ -30,35 +52,35 @@ const Teacher = new mongoose.model("Teacher", studentschema);
 
 const createDocument = async () => {
     try {
-        const stuDent1 = new Teacher({
-            name: "Shubham",
-            class: "BCA",
-            rollno: 206040
+        const stuDent7 = new Teacher({
+            name: "SHUBHAM kumar     ",
+            class: "bsc",
+            rollno: 206048
         })
-        const stuDent2 = new Teacher({
-            name: "Kundan",
-            class: "BCA",
-            rollno: 206046
-        })
-        const stuDent3 = new Teacher({
-            name: "Mohan",
-            class: "BCA",
-            rollno: 206042
-        })
-        const stuDent4 = new Teacher({
-            name: "Priyanka Thapa",
-            class: "BCA",
-            rollno: 206054
-        })
+        // const stuDent2 = new Teacher({
+        //     name: "Kundan",
+        //     class: "BCA",
+        //     rollno: 206046
+        // })
+        // const stuDent3 = new Teacher({
+        //     name: "Mohan",
+        //     class: "BCA",
+        //     rollno: 206042
+        // })
+        // const stuDent4 = new Teacher({
+        //     name: "Priyanka Thapa",
+        //     class: "BCA",
+        //     rollno: 206054
+        // })
 
-        const result = await Teacher.insertMany([stuDent1, stuDent2, stuDent3, stuDent4]);
+        const result = await Teacher.insertMany([stuDent7]);
         console.log(result)
     } catch (err) {
         console.log(err)
     }
 
 }
-// createDocument();
+createDocument();
 
 
 
@@ -108,5 +130,5 @@ const deleteDocument = async (_id) => {
         console.log(err);
     }
 }
-deleteDocument("64ba6662bc01eb5926d6f9a7");
+// deleteDocument("64ba6662bc01eb5926d6f9a7");
 
