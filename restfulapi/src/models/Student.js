@@ -17,21 +17,21 @@ const studentSchema = new mongoose.Schema({
             }
         }
     },
-    phone:{
-        type:Number,
-        required:true,
-        unique:true,
-        maxlength:10,
-        minlength:10
+    phone: {
+        type: Number,
+        required: true,
+        unique: true,
+        maxlength: 10,
+        minlength: 10
     },
-    adderess:{
-        type:String,
-        required:true
+    adderess: {
+        type: String,
+        required: true
     }
 })
 
 //creating a model
 
-const Student= new mongoose.model('Student',studentSchema);
+const Student = new mongoose.model('Student', studentSchema);
 
-module.exports= Student;
+module.exports = Student;
