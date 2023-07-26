@@ -1,6 +1,6 @@
 const mongoose=require("mongoose")
 
-const DB="mongodb+srv://tonygupta275:zoAcRqDwTeldGSC2@cluster0.6efrmtj.mongodb.net/college?retryWrites=true&w=majority";
+const DB="mongodb+srv://tonygupta275:zoAcRqDwTeldGSC2@cluster0.6efrmtj.mongodb.net/students-api?retryWrites=true&w=majority";
 
 mongoose.connect(DB, {
     useNewUrlParser: true,
