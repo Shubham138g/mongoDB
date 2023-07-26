@@ -21,7 +21,6 @@ const studentSchema = new mongoose.Schema({
         type: Number,
         required: true,
         unique: true,
-        maxlength: 10,
         minlength: 10
     },
     adderess: {

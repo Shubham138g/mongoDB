@@ -1,15 +1,26 @@
-const express= require("express");
+const express = require("express");
 require("./db/conn");
-const Student= require("./models/Student")
-const app =express();
+const Student = require("./models/Student")
+const app = express();
 
-app.get("/",(req,res)=>{
-    res.send("hello from the home page")
-})
-app.post("/students",(req,res)=>{
-    res.send("hello from the user page")
+
+app.use(express.json());
+
+
+// app.get("/",(req,res)=>{
+//     res.send("hello from the home page")
+// })
+app.post("/students", (req, res) => {
+    console.log(req.body);
+    const user = new Student(req.body)
+
+    user.save().then(() => {
+        res.status(201).send(user);
+    }).catch((err) => {
+        res.status(400).send(err);
+    })
 })
 
-app.listen(3000,()=>{
+app.listen(3000, () => {
     console.log(`server is runnig on 3000`)
 })
