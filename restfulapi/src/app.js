@@ -1,6 +1,7 @@
 const express = require("express");
 require("./db/conn");
 const Student = require("./models/Student")
+const PORT=3000;
 const app = express();
 
 
@@ -21,6 +22,11 @@ app.post("/students", (req, res) => {
     })
 })
 
-app.listen(3000, () => {
-    console.log(`server is runnig on 3000`)
+
+
+
+
+//listen to port number 3000
+app.listen(PORT, () => {
+    console.log(`server is runnig on ${PORT}`)
 })
