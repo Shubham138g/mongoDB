@@ -27,7 +27,6 @@ app.use(express.json());
 
 
 //using async await to post method
-
 app.post("/students", async (req, res) => {
     try {
         const user = new Student(req.body);
