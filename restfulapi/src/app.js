@@ -3,7 +3,6 @@ require("./db/conn");
 const Student = require("./models/Student")
 
 const PORT = 3000;
-
 const app = express();
 
 
@@ -84,7 +83,6 @@ app.patch("/students/:id", async (req, res) => {
 })
 
 //delete students by its ID using patch http method
-
 app.delete("/students/:id",async(req,res)=>{
     try{
         const _id =req.params.id;
@@ -98,6 +96,10 @@ app.delete("/students/:id",async(req,res)=>{
         res.status(500).send(err);
     }
 })
+
+
+
+
 
 //listen to port number 3000
 app.listen(PORT, () => {
