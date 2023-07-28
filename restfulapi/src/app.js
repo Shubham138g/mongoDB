@@ -83,7 +83,7 @@ app.patch("/students/:id", async (req, res) => {
     }
 })
 
-
+//update students by its ID using patch http method
 
 //listen to port number 3000
 app.listen(PORT, () => {
