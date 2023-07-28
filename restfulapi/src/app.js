@@ -83,7 +83,21 @@ app.patch("/students/:id", async (req, res) => {
     }
 })
 
-//update students by its ID using patch http method
+//delete students by its ID using patch http method
+
+app.delete("/students/:id",async(req,res)=>{
+    try{
+        const _id =req.params.id;
+        const deleteStudent=await Student.findByIdAndDelete(_id);
+
+        if(!deleteStudent){
+            return res.status(404).send();
+        }
+        res.send(deleteStudent);
+    }catch(err){
+        res.status(500).send(err);
+    }
+})
 
 //listen to port number 3000
 app.listen(PORT, () => {
