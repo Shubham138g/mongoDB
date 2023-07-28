@@ -72,26 +72,26 @@ app.get("/students/:id", async (req, res) => {
 //update students by its ID using patch http method
 
 app.patch("/students/:id", async (req, res) => {
-    try{
+    try {
         const _id = req.params.id;
-        const updateStudents = await Student.findByIdAndUpdate(_id, req.body,{new :true});
+        const updateStudents = await Student.findByIdAndUpdate(_id, req.body, { new: true });
         res.send(updateStudents);
-    }catch(err){
+    } catch (err) {
         res.status(404).send(err);
     }
 })
 
 //delete students by its ID using patch http method
-app.delete("/students/:id",async(req,res)=>{
-    try{
-        const _id =req.params.id;
-        const deleteStudent=await Student.findByIdAndDelete(_id);
+app.delete("/students/:id", async (req, res) => {
+    try {
+        const _id = req.params.id;
+        const deleteStudent = await Student.findByIdAndDelete(_id);
 
-        if(!deleteStudent){
+        if (!deleteStudent) {
             return res.status(404).send();
         }
         res.send(deleteStudent);
-    }catch(err){
+    } catch (err) {
         res.status(500).send(err);
     }
 })
