@@ -50,8 +50,9 @@ app.get("/students", async (req, res) => {
     }
 })
 
-//get single student data using HTTP GET method
 
+
+//get single student by its ID data using HTTP GET method
 app.get("/students/:id", async (req, res) => {
     try {
         const _id = req.params.id;
@@ -65,11 +66,22 @@ app.get("/students/:id", async (req, res) => {
         }
     }
     catch (err) {
-        res.send(err);
+        res.status(500).send(err);
     }
-
 })
 
+
+//update students by its ID using patch http method
+
+app.patch("/students/:id", async (req, res) => {
+    try{
+        const _id = req.params.id;
+        const updateStudents = await Student.findByIdAndUpdate(_id, req.body,{new :true});
+        res.send(updateStudents);
+    }catch(err){
+        res.status(404).send(err);
+    }
+})
 
 
 
