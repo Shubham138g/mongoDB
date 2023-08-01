@@ -39,6 +39,8 @@ app.post("/register", async (req, res) => {
                 pass: req.body.password,
                 cpass: req.body.confirm_password,
             })
+            const registerd=await registerEmployee.save();
+            res.status(201).render("index")
 
         }
         else {
