@@ -50,10 +50,26 @@ app.post("/register", async (req, res) => {
     } catch (err) {
         res.status(400).send();
     }
-
 })
 app.get("/login", (req, res) => {
     res.render("login");
+})
+app.post("/login", async(req, res) => {
+    try{
+        const email=req.body.email;
+        const pass=req.body.pass;
+    
+        const useremail= await Register.findOne({email:email});
+        if(useremail.pass===pass){
+            res.status(201).render("index")
+        }else{
+            res.status(400).send("invalid login details")
+        }
+    }catch(err){
+        res.status(400).send("invalid login details")
+    }
+    
+ 
 })
 
 
