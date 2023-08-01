@@ -4,6 +4,7 @@ const app =express();
 const path=require("path");
 const hbs=require("hbs");
 require("./db/conn");
+const Register=require("./models/registers")
 // const PORT=4000;
 
 const port= process.env.PORT || 3000;
@@ -14,12 +15,18 @@ const partials_path= path.join(__dirname,"../templates/partials");
 
 
 app.use(express.static(static_path));
-app.set("views engine","hbs");
+app.set("view engine","hbs");
 app.set("views",templates_path);
 hbs.registerPartials(partials_path);
 
 app.get("/",(req,res)=>{
     res.render("index");
+})
+app.get("/register",(req,res)=>{
+    res.render("register");
+})
+app.get("/login",(req,res)=>{
+    res.render("login");
 })
 
 
