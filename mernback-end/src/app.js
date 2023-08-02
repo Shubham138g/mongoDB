@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 
-const bcrypt=require("bcryptjs");
+const bcrypt = require("bcryptjs");
 const path = require("path");
 const hbs = require("hbs");
 require("./db/conn");
@@ -40,7 +40,7 @@ app.post("/register", async (req, res) => {
                 pass: req.body.password,
                 cpass: req.body.confirm_password,
             })
-            const registerd=await registerEmployee.save();
+            const registerd = await registerEmployee.save();
             res.status(201).render("index")
         }
         else {
@@ -53,24 +53,25 @@ app.post("/register", async (req, res) => {
 app.get("/login", (req, res) => {
     res.render("login");
 })
-app.post("/login", async(req, res) => {
-    try{
-        const email=req.body.email;
-        const pass=req.body.pass;
-    
-        const useremail= await Register.findOne({email:email});
-        const isMatch= await bcrypt.compare(pass,useremail.pass);
+app.post("/login", async (req, res) => {
+    try {
+        const email = req.body.email;
+        const pass = req.body.pass;
+
+        const useremail = await Register.findOne({ email: email });
+        //comparing hash password with passwor which is stored on database
+        const isMatch = await bcrypt.compare(pass, useremail.pass);
         // if(useremail.pass===pass){
-            if(isMatch){
+        if (isMatch) {
             res.status(201).render("index")
-        }else{
+        } else {
             res.status(400).send("invalid password details")
         }
-    }catch(err){
+    } catch (err) {
         res.status(400).send("invalid login details")
     }
-    
- 
+
+
 })
 
 
