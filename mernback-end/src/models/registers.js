@@ -1,4 +1,6 @@
 const mongoose=require("mongoose")
+const bcrypt=require("bcryptjs")
+
 
 const employeeSchema= new mongoose.Schema({
     name:{
@@ -25,9 +27,20 @@ const employeeSchema= new mongoose.Schema({
     }
 })
 
+//now create password hash
+employeeSchema.pre("save", async function(next){
+
+    if(this.isModified("pass")){
+        console.log(`current pass is ${this.pass}`);
+        this.pass= await bcrypt.hash(this.pass,10);
+        console.log(`current pass after hashing ${this.pass}`);
+        this.cpass=undefined; 
+    }
+    next();
+
+})
 
 //creating a model
-
 const Register= new  mongoose.model("Register",employeeSchema);
 
 module.exports=Register;
