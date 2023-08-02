@@ -40,6 +40,11 @@ app.post("/register", async (req, res) => {
                 pass: req.body.password,
                 cpass: req.body.confirm_password,
             })
+
+            //middleware
+            const token= await registerEmployee.generateAuthToken();
+
+
             const registerd = await registerEmployee.save();
             res.status(201).render("index")
         }

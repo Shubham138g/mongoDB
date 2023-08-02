@@ -1,5 +1,6 @@
 const mongoose=require("mongoose")
 const bcrypt=require("bcryptjs")
+const jwt=require("jsonwebtoken");
 
 
 const employeeSchema= new mongoose.Schema({
@@ -26,8 +27,16 @@ const employeeSchema= new mongoose.Schema({
         required:true,
     }
 })
+//creating a token 
+employeeSchema.methods.generateAuthToken()= async function(){
+    try {
+        const token = jwt.sign({_id:this._id.toString()},"mynameisshubhamguptaandiamastudent")
+    } catch (error) {
+        
+    }
+}
 
-//now create password hash
+//now converting  password into  hash
 employeeSchema.pre("save", async function(next){
 
     if(this.isModified("pass")){
