@@ -25,25 +25,34 @@ const employeeSchema= new mongoose.Schema({
     cpass:{
         type:String,
         required:true,
-    }
+    },
+    tokens:[{
+        token:{
+            type:String,
+            required:true
+        }
+    }]
 })
 //creating a token 
-employeeSchema.methods.generateAuthToken()= async function(){
+employeeSchema.methods.generateAuthToken= async function(){
     try {
-        const token = jwt.sign({_id:this._id.toString()},"mynameisshubhamguptaandiamastudent")
+        // console.log(this._id);
+        const token = jwt.sign({_id:this._id.toString()},"mynameisshubhamguptaandiamastudent");
+        this.tokens=this.tokens.concat({token:token})
+        await this.save();
+        return token;
     } catch (error) {
-        
+        res.send("the error page"+error)
+        console.log("error"+error);
     }
 }
 
 //now converting  password into  hash
 employeeSchema.pre("save", async function(next){
 
-    if(this.isModified("pass")){
-        console.log(`current pass is ${this.pass}`);
+    if(this.isModified("pass")){ 
         this.pass= await bcrypt.hash(this.pass,10);
-        console.log(`current pass after hashing ${this.pass}`);
-        this.cpass=undefined; 
+        this.cpass=await bcrypt.hash(this.pass,10);
     }
     next();
 

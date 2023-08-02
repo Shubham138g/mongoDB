@@ -43,6 +43,7 @@ app.post("/register", async (req, res) => {
 
             //middleware
             const token= await registerEmployee.generateAuthToken();
+            
 
 
             const registerd = await registerEmployee.save();
