@@ -1,6 +1,7 @@
 const mongoose = require("mongoose")
 
-const DB="mongodb+srv://tonygupta275:zoAcRqDwTeldGSC2@cluster0.6efrmtj.mongodb.net/mernbackend?retryWrites=true&w=majority";
+const DB=process.env.DATABASE_NAME;
+// const DB="mongodb+srv://tonygupta275:zoAcRqDwTeldGSC2@cluster0.6efrmtj.mongodb.net/mernbackend?retryWrites=true&w=majority";
 
 
 mongoose.connect(DB,{
