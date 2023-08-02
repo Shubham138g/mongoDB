@@ -42,7 +42,7 @@ app.post("/register", async (req, res) => {
             })
 
             //middleware
-            const token= await registerEmployee.generateAuthToken();
+            const token = await registerEmployee.generateAuthToken();
             console.log(token);
 
 
@@ -69,8 +69,8 @@ app.post("/login", async (req, res) => {
         const isMatch = await bcrypt.compare(pass, useremail.pass);
 
         //middleware
-        const token= await useremail.generateAuthToken();
-        console.log("the token part "+token);
+        const token = await useremail.generateAuthToken();
+        console.log("the token part " + token);
 
 
         // if(useremail.pass===pass){
