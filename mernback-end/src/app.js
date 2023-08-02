@@ -43,7 +43,7 @@ app.post("/register", async (req, res) => {
 
             //middleware
             const token= await registerEmployee.generateAuthToken();
-            
+            console.log(token);
 
 
             const registerd = await registerEmployee.save();
@@ -67,6 +67,12 @@ app.post("/login", async (req, res) => {
         const useremail = await Register.findOne({ email: email });
         //comparing hash password with passwor which is stored on database
         const isMatch = await bcrypt.compare(pass, useremail.pass);
+
+        //middleware
+        const token= await useremail.generateAuthToken();
+        console.log("the token part "+token);
+
+
         // if(useremail.pass===pass){
         if (isMatch) {
             res.status(201).render("index")
