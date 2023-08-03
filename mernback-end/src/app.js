@@ -67,7 +67,7 @@ app.post("/register", async (req, res) => {
 
 
             const registerd = await registerEmployee.save();
-            // console.log("the page part"+registerd);
+            console.log("the page part"+registerd);
             res.status(201).render("index")
         }
         else {
