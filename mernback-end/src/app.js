@@ -48,9 +48,9 @@ app.post("/register", async (req, res) => {
             console.log(token);
 
             //setting cookie
-            res.cookie("jwt",token,{
-                expires: new Date(Date.now()+30000),
-                httpOnly:true
+            res.cookie("jwt", token, {
+                expires: new Date(Date.now() + 30000),
+                httpOnly: true
             });
             console.log(cookie);
 
@@ -81,6 +81,13 @@ app.post("/login", async (req, res) => {
         //middleware
         const token = await useremail.generateAuthToken();
         console.log("the token part " + token);
+
+        //setting cookie
+        res.cookie("jwt", token, {
+            expires: new Date(Date.now() + 50000),
+            httpOnly: true,
+            // secure:true
+        });
 
 
         // if(useremail.pass===pass){
