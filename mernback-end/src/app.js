@@ -47,8 +47,16 @@ app.post("/register", async (req, res) => {
             const token = await registerEmployee.generateAuthToken();
             console.log(token);
 
+            //setting cookie
+            res.cookie("jwt",token,{
+                expires: new Date(Date.now()+30000),
+                httpOnly:true
+            });
+            console.log(cookie);
+
 
             const registerd = await registerEmployee.save();
+            // console.log("the page part"+registerd);
             res.status(201).render("index")
         }
         else {
