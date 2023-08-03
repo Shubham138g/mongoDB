@@ -1,17 +1,19 @@
 require("dotenv").config();
 const express = require("express");
 const app = express();
+const port = process.env.PORT || 3000;
 
+
+require("./db/conn");
 const bcrypt = require("bcryptjs");
 const path = require("path");
 const hbs = require("hbs");
 const jwt=require("jsonwebtoken");
 const cookieParser=require("cookie-parser");
-require("./db/conn");
 const Register = require("./models/registers")
-// const PORT=4000;
+const auth=require("./middleware/auth")
 
-const port = process.env.PORT || 3000;
+
 
 const static_path = path.join(__dirname, "../public");
 const templates_path = path.join(__dirname, "../templates/views");
@@ -20,19 +22,22 @@ const partials_path = path.join(__dirname, "../templates/partials");
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: false }));
-
 app.use(express.static(static_path));
+
 app.set("view engine", "hbs");
 app.set("views", templates_path);
 hbs.registerPartials(partials_path);
 
-
+//routing
 app.get("/", (req, res) => {
     res.render("index");
 })
-app.get("/secret", (req, res) => {
+app.get("/secret", auth, (req, res) => {
+    // console.log(`this is cookies: ${req.cookies.jwt}`);
     res.render("secret");
 })
+
+//register
 app.get("/register", (req, res) => {
     res.render("register");
 })
@@ -93,13 +98,12 @@ app.post("/login", async (req, res) => {
 
         //setting cookie
         res.cookie("jwt", token, {
-            expires: new Date(Date.now() + 50000),
+            expires: new Date(Date.now() + 600000),
             httpOnly: true,
             // secure:true
         });
 
-        console.log(req.cookies.jwt);
-
+       
 
         // if(useremail.pass===pass){
         if (isMatch) {
@@ -114,7 +118,7 @@ app.post("/login", async (req, res) => {
 
 
 
-
+//server is listeing here:
 app.listen(port, () => {
     console.log(`server is running on port number ${port}`)
 })
