@@ -5,6 +5,8 @@ const app = express();
 const bcrypt = require("bcryptjs");
 const path = require("path");
 const hbs = require("hbs");
+const jwt=require("jsonwebtoken");
+const cookieParser=require("cookie-parser");
 require("./db/conn");
 const Register = require("./models/registers")
 // const PORT=4000;
@@ -15,7 +17,8 @@ const static_path = path.join(__dirname, "../public");
 const templates_path = path.join(__dirname, "../templates/views");
 const partials_path = path.join(__dirname, "../templates/partials");
 
-app.use(express.json())
+app.use(express.json());
+app.use(cookieParser());
 app.use(express.urlencoded({ extended: false }));
 
 app.use(express.static(static_path));
@@ -26,6 +29,9 @@ hbs.registerPartials(partials_path);
 
 app.get("/", (req, res) => {
     res.render("index");
+})
+app.get("/secret", (req, res) => {
+    res.render("secret");
 })
 app.get("/register", (req, res) => {
     res.render("register");
@@ -66,6 +72,9 @@ app.post("/register", async (req, res) => {
         res.status(400).send();
     }
 })
+
+
+//login method
 app.get("/login", (req, res) => {
     res.render("login");
 })
@@ -89,6 +98,8 @@ app.post("/login", async (req, res) => {
             // secure:true
         });
 
+        console.log(req.cookies.jwt);
+
 
         // if(useremail.pass===pass){
         if (isMatch) {
@@ -99,9 +110,9 @@ app.post("/login", async (req, res) => {
     } catch (err) {
         res.status(400).send("invalid login details")
     }
-
-
 })
+
+
 
 
 app.listen(port, () => {
