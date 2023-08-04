@@ -47,16 +47,16 @@ app.get("/logout",auth, async(req,res)=>{
         req.user.tokens=req.user.tokens.filter((currentElement)=>{
             return currentElement.token != req.token;
         });
-
+        
         //logout from all devices
         // req.user.tokens=[];
 
         //delete the cookie from the browser
         res.clearCookie("jwt");
 
+        
+        await req.user.save();
         console.log("logout sucesssful");
-
-        await res.user.save();
         res.render("login");       
     } catch (error) {
         res.status(500).send(error);    
@@ -96,7 +96,7 @@ app.post("/register", async (req, res) => {
 
             const registerd = await registerEmployee.save();
             console.log("the page part"+registerd);
-            res.status(201).render("index")
+            res.status(201).render("index");
         }
         else {
             res.send("password is not matching")
