@@ -8,7 +8,7 @@ require("./db/conn");
 const bcrypt = require("bcryptjs");
 const path = require("path");
 const hbs = require("hbs");
-const jwt=require("jsonwebtoken");
+// const jwt=require("jsonwebtoken");
 const cookieParser=require("cookie-parser");
 const Register = require("./models/registers")
 const auth=require("./middleware/auth");
@@ -44,12 +44,12 @@ app.get("/logout",auth, async(req,res)=>{
     try {
         console.log(req.user);
         //for single logout
-        // req.user.tokens=req.user.tokens.filter((currentElement)=>{
-        //     return currentElement.token != req.token;
-        // })
+        req.user.tokens=req.user.tokens.filter((currentElement)=>{
+            return currentElement.token != req.token;
+        });
 
         //logout from all devices
-        req.user.tokens=[];
+        // req.user.tokens=[];
 
         //delete the cookie from the browser
         res.clearCookie("jwt");
