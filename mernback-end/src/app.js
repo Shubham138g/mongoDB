@@ -11,7 +11,8 @@ const hbs = require("hbs");
 const jwt=require("jsonwebtoken");
 const cookieParser=require("cookie-parser");
 const Register = require("./models/registers")
-const auth=require("./middleware/auth")
+const auth=require("./middleware/auth");
+// const { log } = require("console");
 
 
 
@@ -36,6 +37,27 @@ app.get("/secret", auth, (req, res) => {
     // console.log(`this is cookies: ${req.cookies.jwt}`);
     res.render("secret");
 })
+
+
+//logout section
+app.get("/logout",auth, async(req,res)=>{
+    try {
+        console.log(req.user);
+        req.user.tokens=req.user.tokens.filter((currentElement)=>{
+            return currentElement.token != req.token;
+        })
+        res.clearCookie("jwt");
+
+        console.log("logout sucesssful");
+
+        await res.user.save();
+        res.render("login");       
+    } catch (error) {
+        res.status(500).send(error);    
+    }
+
+})
+
 
 //register
 app.get("/register", (req, res) => {
