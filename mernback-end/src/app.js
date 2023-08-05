@@ -8,11 +8,11 @@ require("./db/conn");
 const bcrypt = require("bcryptjs");
 const path = require("path");
 const hbs = require("hbs");
-// const jwt=require("jsonwebtoken");
+const jwt=require("jsonwebtoken");
 const cookieParser=require("cookie-parser");
 const Register = require("./models/registers")
 const auth=require("./middleware/auth");
-// const { log } = require("console");
+
 
 
 
